@@ -31,10 +31,10 @@ app.post('/', (req, res) => {
 })
 //PUT : EDIT A USER BY ID 
 app.put('/:userId', (req, res) => {
-  User.findById(req.params.userId, (err,user)=>{
-    user.name = req.body.name
-    user.age = req.body.age
-    user.email = req.body.email
+  User.findByIdAndUpdate(req.params.userId, (err,user)=>{
+    user.name = {$set: req.body.name}
+    user.age = {$set: req.body.age}
+    user.email =  {$set: req.body.email}
     user.save()
     res.json(user)
   })
