@@ -31,14 +31,18 @@ app.post('/', (req, res) => {
 })
 //PUT : EDIT A USER BY ID 
 app.put('/:userId', (req, res) => {
-  User.findByIdAndUpdate(req.params.userId, (err,user)=>{
-    user.name = {$set: req.body.name}
-    user.age = {$set: req.body.age}
-    user.email =  {$set: req.body.email}
-    user.save()
-    res.json(user)
-  })
-})
+  User.findByIdAndUpdate(
+    req.params.userId,
+    { $set:req.body },
+    (err, user) => {
+      try {
+        res.json(user);
+      } catch (error) {
+        res.json({ msg: "error" });
+      }
+    }
+  );
+});
 //DELETE : REMOVE A USER BY ID 
 app.delete('/:userId', (req, res) => {
   User.findById(req.params.userId, (err,user)=>{
